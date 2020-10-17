@@ -1,0 +1,60 @@
+<!doctype html>
+
+<head>
+<title>Query Search</title>
+
+</head>
+
+<body style="height: 100%;background: linear-gradient(to bottom right, #336699 0%, #ff9999 100%) fixed;text-align:center;">
+
+<h2>Insert a lyric and find its K most relevant songs</h2>
+
+<div style="border: 1px solid;border-radius: 5px;">
+
+    <br>
+    <br>
+<form method="post">
+
+<label for="query">Search Query:</label>
+<input type="text" id="query" name="query"><br><br>
+
+<label for="KNN">Number of K:</label>
+<input type="text" id="KNN" name="KNN"><br><br>
+
+
+<select id="distances" name="distances">
+<option value="euclidean" selected>Euclidean</option>
+              <option value="cosine">Cosine</option>
+              <option value="chebyshev">Chebyshev</option>
+              <option value="manhattan">Manhattan</option>
+              <option value="jaccard">Jaccard</option>
+</select>
+
+<input type="submit" value="Submit">
+
+</form>
+</div>
+
+{% if result is defined %}
+<p> </p>
+
+{% for item in result %}
+{% autoescape false %}
+<div style="border: 1px solid;border-radius: 5px;">
+    <p> Item: {{ item["id"] }} </p>
+    <p> Distance: {{ item["distance"] }} </p>
+
+    {% for t in item["text"] %}
+
+
+    <p>{{t}}</p>
+    {% endfor %}
+    {% endautoescape %}
+
+    <p> {{ item["link"] }} </p>
+</div>
+<p> </p>
+{% endfor %}
+{% endif %}
+
+</body>
